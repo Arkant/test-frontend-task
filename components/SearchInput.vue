@@ -22,11 +22,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .search-input {
   padding: 10px 35px;
   width: 270px;
   border: 1px solid #E0E0E0;
   background: url(../assets/icons8-search.svg) no-repeat 11px 11px;
+
+  @media screen and (max-width: 480px) {
+    width: 200px;
+  }
 }
 </style>

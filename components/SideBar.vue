@@ -16,5 +16,10 @@ export default {
   top: 0;
   left: 0;
   background-color: #F9FAFB;
+
+  @media screen and (max-width: 480px) {
+    height: 70px;
+    width: 100%;
+  }
 }
 </style>

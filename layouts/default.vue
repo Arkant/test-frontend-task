@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <SideBar />
     <div class="layout-content-wrapper">
       <Nuxt />
@@ -19,8 +19,20 @@ export default {
 </script>
 
 <style lang="scss">
-.layout-content-wrapper {
-  font-family: Roboto;
-  margin-left: 270px;
+$color-primary: #263238;
+
+.layout {
+  &-content-wrapper {
+    font-family: Roboto;
+    margin-left: 270px;
+    color: $color-primary;
+
+    @media screen and (max-width: 480px) {
+      display: flex;
+      flex-direction: column;
+      margin-left: 0;
+      margin-top: 70px;
+    }
+  }
 }
 </style>

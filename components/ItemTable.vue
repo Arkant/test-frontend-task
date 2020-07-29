@@ -22,13 +22,26 @@
       <tr v-for="(row, index) in searchedRows" :key="index" class="table-row">
         <td v-for="(data, key) in row" :key="key" class="table-row-сontainer">
           <div v-if="key === 'name'" class="table-row-сontainer-content">
+            <p class="table-row-сontainer-content-name">
+              GALAXY NAME
+            </p>
             <img :src="rows[index]['img']">
-            {{ data }}
+            <p>
+              {{ data }}
+            </p>
           </div>
           <div v-if="key === 'constellation'" class="table-row-сontainer-content">
-            {{ data }}
+            <p class="table-row-сontainer-content-name">
+              CONSTELLATION
+            </p>
+            <p>
+              {{ data }}
+            </p>
           </div>
           <div v-if="key === 'originOfName'" class="table-row-сontainer-content">
+            <p class="table-row-сontainer-content-name">
+              ORIGIN OF NAME
+            </p>
             {{ data }}
           </div>
         </td>
@@ -98,6 +111,10 @@ export default {
   border-collapse: collapse;
 
   &-header {
+    @media screen and (max-width: 480px) {
+      display: none;
+    }
+
     &-content {
       &-sort {
         display: flex;
@@ -117,9 +134,16 @@ export default {
   }
 
   &-row {
+    @media screen and (max-width: 480px) {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 25px;
+    }
+
     &:hover {
       background-color: #dfe6fc;
     }
+
     &-сontainer{
       text-align: left;
       border: 1px solid #E0E0E0;
@@ -128,10 +152,28 @@ export default {
         display: flex;
         align-items: center;
         padding: 35px 20px;
+
         img {
           width: 30px;
           height: 30px;
           margin-right: 20px;
+        }
+
+        @media screen and (max-width: 480px) {
+          padding: 20px 10px 10px;
+          position: relative;
+        }
+
+        &-name {
+          display: none;
+          margin: 0;
+
+          @media screen and (max-width: 480px) {
+            display: block;
+            position: absolute;
+            top: 5px;
+            font-size: 10px;
+          }
         }
       }
     }

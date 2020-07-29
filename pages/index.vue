@@ -83,13 +83,32 @@ export default {
 .page-container {
   padding: 70px 60px;
 
+    @media screen and (max-width: 480px) {
+      padding: 15px;
+    }
+
   &-header {
     display: flex;
+
+      @media screen and (max-width: 480px) {
+        flex-direction: column;
+        align-items: start;
+      }
+
     align-items: center;
     justify-content: space-between;
     margin-bottom: 60px;
+
+      @media screen and (max-width: 480px) {
+        margin-bottom: 25px;
+      }
+
     h1 {
       margin: 0;
+
+      @media screen and (max-width: 480px) {
+        margin-bottom: 15px;
+      }
     }
   }
 }
