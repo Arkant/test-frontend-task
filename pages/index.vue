@@ -1,73 +1,96 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        test-frontend-task
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+  <div class="page-container">
+    <div class="page-container-header">
+      <h1>Named galaxies</h1>
+      <SearchInput @search="(e) => searchValue = e" />
     </div>
+    <ItemTable v-if="showTable" :columns="columns" :rows="rows" :search="searchValue" @sort="sort" />
   </div>
 </template>
 
 <script>
-export default {}
+import axios from 'axios'
+import SearchInput from '../components/SearchInput'
+import ItemTable from '../components/ItemTable'
+
+export default {
+  components: {
+    SearchInput,
+    ItemTable
+  },
+  data () {
+    return {
+      columns: [
+        {
+          title: 'Galaxy Name',
+          origin: 'name'
+        },
+        {
+          title: 'Constelation',
+          origin: 'constellation'
+        },
+        {
+          title: 'Origin Of Name',
+          origin: 'originOfName'
+        }
+      ],
+      rows: [],
+      searchValue: ''
+    }
+  },
+  computed: {
+    showTable () {
+      return this.rows && this.rows.length > 0
+    }
+  },
+  mounted () {
+    this.getData()
+  },
+  methods: {
+    async getData () {
+      try {
+        const result = await axios.get('/galaxies', {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        this.rows = result.data
+      } catch (e) {
+        this.error = e.response.statusText
+      }
+    },
+    sort (sortDirection) {
+      // лучше было бы сделать сортировку на бэке
+      if (sortDirection === 'asc') {
+        this.rows = this.rows.sort((a, b) => {
+          if (a.name < b.name) { return -1 }
+          if (a.name > b.name) { return 1 }
+          return 0
+        })
+      } else {
+        this.rows = this.rows.sort((a, b) => {
+          if (a.name > b.name) { return -1 }
+          if (a.name < b.name) { return 1 }
+          return 0
+        })
+      }
+    }
+  }
+}
 </script>
 
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+<style lang="scss">
+.page-container {
+  padding: 70px 60px;
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
+    h1 {
+      margin: 0;
+    }
+  }
 }
 </style>
