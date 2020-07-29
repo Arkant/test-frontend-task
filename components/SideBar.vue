@@ -16,6 +16,7 @@ export default {
   top: 0;
   left: 0;
   background-color: #F9FAFB;
+  z-index: 1;
 
   @media screen and (max-width: 480px) {
     height: 70px;
